@@ -1,0 +1,10 @@
+DiffGrad adjusts the step size for each parameter by comparing the current gradient vs the previous.  It is designed to solve the 'Adam' 
+overshoot problem, where the momentum of Adam can carry it right over the global mininimum.
+
+https://github.com/shivram1987/diffGrad  for original source and paper.
+
+This version adds in a version parameter:  version 0 is the main one used in the paper.  version 1 removes the abs value from the calculations and
+allows faster clamping.
+Use:  version=1 in your optimizer params.  version=0 is default.
+
+More info and medium article coming soon.
