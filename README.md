@@ -12,3 +12,6 @@ Official diffGrad paper:  https://arxiv.org/abs/1909.11015v2
 General papers of relevance:
 
 Does Adam stick close to the optimal point?  https://arxiv.org/abs/1911.00289v1
+
+
+Probabalistic line searches for stochastic optimization (2017, matlab only but good theory work):  https://arxiv.org/abs/1703.10034v2  
