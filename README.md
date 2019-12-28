@@ -7,9 +7,15 @@ https://medium.com/@lessw/meet-diffgrad-new-deep-learning-optimizer-that-solves-
 
 Official diffGrad paper:  https://arxiv.org/abs/1909.11015v2
 
+<b>In Progress:</b></br></br>
+A - Parabolic Approximation Line Search:  https://arxiv.org/abs/1903.11991v2
+
+B - Stochastic Line Search (SLS): pending (needs param group support)
+
+c - AvaGrad 
 
 
-General papers of relevance:
+<b>General papers of relevance:</b>
 
 Does Adam stick close to the optimal point?  https://arxiv.org/abs/1911.00289v1
 
