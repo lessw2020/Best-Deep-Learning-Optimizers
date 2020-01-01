@@ -4,6 +4,9 @@ from torch.optim import Optimizer
 
 #source - https://github.com/lancopku/AdaMod/blob/master/adamod/adamod.py
 
+#modifications @lessw2020 - blend diffGrad + AdaMod = diffmod.
+
+
 class DiffMod(Optimizer):
     """Implements AdaMod algorithm with Decoupled Weight Decay (arxiv.org/abs/1711.05101)
     It has been proposed in `Adaptive and Momental Bounds for Adaptive Learning Rate Methods`_.
