@@ -9,4 +9,6 @@ This version adds in a version parameter:  version 0 is the main one used in the
 allows faster clamping.
 Use:  version=1 in your optimizer params.  version=0 is default.
 
+12/27 - added DiffRGrad - this is diffGrad with Rectified Adam to start.  Thus no warmup needed and diffGrad kicks in after Rectified Adam says variance is ready to go. 
+
 Medium article and example usage:  https://medium.com/@lessw/meet-diffgrad-new-deep-learning-optimizer-that-solves-adams-overshoot-issue-ec63e28e01b2
