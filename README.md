@@ -1,8 +1,8 @@
-# Best-Deep-Learning-Optimizers
+# Best-Deep-Learning-Optimizers</br>
 Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN, NLP suitable
-</br>
+</br></br>
 Current top performer = DiffMod (AdaMod + DiffGrad combined)..but this is only on initial testing.
-</br>
+</br></br>
 12/27 - added DiffGrad, and unofficial version 1 support (coded from the paper). 
 </br>
 12/28 - added Diff_RGrad = diffGrad + Rectified Adam to start off....seems to work quite well. 
