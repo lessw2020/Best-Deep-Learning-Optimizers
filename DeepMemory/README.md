@@ -1,7 +1,7 @@
 DeepMemory is a new optimizer I came up with after blending DiffGrad + AdaMod.  The core concept is to provide the optimizer with
 long term memory of the previous step sizes. 
 
-Results in initial testing put it on par with Ranger and both Ranger and DeepMemory topped the recent testing I did with about 8 different opptimizers.
+Results in initial testing put it on par with Ranger and both Ranger and DeepMemory topped the recent testing I did with about 8 different optimizers.
 
 
 DeepMemory is designed to offset the weakness of many adaptive optimizers by creating a 'long term' memory of the gradients over the course of an epoch.
