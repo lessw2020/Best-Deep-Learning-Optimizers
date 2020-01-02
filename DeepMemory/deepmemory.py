@@ -2,30 +2,43 @@ import math
 import torch
 from torch.optim import Optimizer
 
-# source and paper link - https://github.com/lancopku/AdaMod/blob/master/adamod/adamod.py
+# DeepMemory is designed to offset the weakness of many adaptive optimizers by creating a 'long term' memory of the gradients over the course of an epoch.
+# This long term memory is averaged against the current adaptive step size generated from the current mini-batch in order to help guide the step size more optimally.
 
-# modifications @lessw2020 - blend diffGrad + AdaMod = diffmod.
+# DeepMemory also keeps a short term gradient buffer that was developed in diffgrad, and locks down the step size when minimal gradient change is detected.
+
+# 1/1/2020 - @lessw2020 developed the long term memory concept as a blended average (vs max throttle in AdaMod), and created and tested deep Memory
+# credits:
+# DiffGrad:  Uses the local gradient friction clamp developed by DiffGrad, but with version 1 coded by lessw from the paper:
+# https://github.com/shivram1987/diffGrad (S.R.Dubey et al)
+
+# AdaMod - DeepMemory builds on the concepts for longer term monitoring in AdaMod (b3 concept but changed from min throttling to blended average and changed input to len_memory and size):
+
+# AdaMod source and paper link - https://github.com/lancopku/AdaMod/blob/master/adamod/adamod.py
+
+# modifications @lessw2020
 # 1/1/20 = instead of b3, change to 'len_memory' and compute b3 (.99 is really 100 memory as 1-(1/100)= .99)
 
 
-class DiffMod(Optimizer):
-    """Implements AdaMod algorithm with Decoupled Weight Decay (arxiv.org/abs/1711.05101)
-    It has been proposed in `Adaptive and Momental Bounds for Adaptive Learning Rate Methods`_.
+class DeepMemory(Optimizer):
+    """Implements DeepMemory algorithm (built upon DiffGrad and AdaMod concepts) with Decoupled Weight Decay (arxiv.org/abs/1711.05101)
+    
     Arguments:
         params (iterable): iterable of parameters to optimize or dicts defining
             parameter groups
         lr (float, optional): learning rate (default: 1e-3)
         betas (Tuple[float, float], optional): coefficients used for computing
             running averages of gradient and its square (default: (0.9, 0.999))
-        beta3 (float, optional): smoothing coefficient for adaptive learning rates (default: 0.9999)
-        len_memory = b3 in easier to use format.  specify the memory len, b3 is computed.
+        len_memory = b3 (smoothing coefficient from AdaMod) in easier to use format, mem average with b3 is averaged with immmediate gradient.  
+            specify the memory len, b3 is computed.
+        version = 0 means .5 clamping rate, 1 = 0-1 clamping rate (from DiffGrad)
         eps (float, optional): term added to the denominator to improve
             numerical stability (default: 1e-8)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
     """
 
-    def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), len_memory=1000, version=0,
-                 eps=1e-8, weight_decay=0):
+    def __init__(self, params, lr=4e-3, betas=(0.9, 0.999), len_memory=200, version=1,
+                 eps=1e-6, weight_decay=0, debug_print=False):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))
         if not 0.0 <= eps:
@@ -36,11 +49,16 @@ class DiffMod(Optimizer):
             raise ValueError("Invalid beta parameter at index 1: {}".format(betas[1]))
         
         #compute b3
-        beta3 = 1-(1/len_memory)
-        print(f"length of memory is ",len_memory," and b3 is thus ",beta3)
+        base = 1/len_memory
+        beta3 = 1-(base)
+        print(f"DeepMemory: length of memory is {len_memory} - this should be close or equal to batches per epoch")
+        
+        #debugging
+        self.debug_print=debug_print
+        
         
         if not 0.0 <= beta3 < 1.0:
-            raise ValueError("Invalid beta3 parameter: {}".format(beta3))
+            raise ValueError("Invalid len_memory parameter: {}".format(beta3))
         
         defaults = dict(lr=lr, betas=betas, beta3=beta3, eps=eps,
                         weight_decay=weight_decay)
@@ -102,30 +120,34 @@ class DiffMod(Optimizer):
                 step_size = group['lr'] * math.sqrt(bias_correction2) / bias_correction1
                 
                 # compute diffgrad coefficient (dfc)
-                
-                
                 if self.version==0:
                     diff = abs(previous_grad - grad)
+                    
                 elif self.version ==1:
                     diff = previous_grad-grad
-                elif self.version ==2:
-                    diff =  .5*abs(previous_grad - grad)
+               
                     
                 if self.version==0 or self.version==1:    
                     dfc = 1. / (1. + torch.exp(-diff))
-                elif self.version==2:
-                    dfc = 9. / (1. + torch.exp(-diff))-4      #DFC2 = 9/(1+e-(.5/g/)-4 #range .5,5
+                
                     
                 state['previous_grad'] = grad                
 
                 if group['weight_decay'] != 0:
                     p.data.add_(-group['weight_decay'] * group['lr'], p.data)
 
-                # Applies momental bounds on actual learning rates
+                # create long term memory of actual learning rates (from AdaMod)
                 step_size = torch.full_like(denom, step_size)
                 step_size.div_(denom)
                 exp_avg_lr.mul_(group['beta3']).add_(1 - group['beta3'], step_size)
-                step_size = torch.min(step_size,  exp_avg_lr)
+                
+                if self.debug_print:
+                    print(f"batch step size {step_size} and exp_avg_step {exp_avg_lr}")
+                    
+                #Blend the mini-batch step size with long term memory
+                step_size = step_size.add(exp_avg_lr)
+                step_size = step_size.div(2.)
+                    
                 
                 # update momentum with dfc
                 exp_avg1 = exp_avg * dfc
