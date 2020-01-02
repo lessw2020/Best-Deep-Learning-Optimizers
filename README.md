@@ -1,9 +1,9 @@
 # Best-Deep-Learning-Optimizers</br>
 Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN, NLP suitable
 </br></br>
-Current top performer = DeepMemory and Ranger.  this is only on initial testing.
+Current top performers = DeepMemory and Ranger.  this is only on initial testing.
 </br></br>
-![](images/1120-testing.jpg)
+![](images/1120-optimizer-testing.jpg)
 </br>
 12/27 - added DiffGrad, and unofficial version 1 support (coded from the paper). 
 </br>
