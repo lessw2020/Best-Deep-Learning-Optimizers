@@ -3,6 +3,7 @@ import torch
 from torch.optim import Optimizer
 
 #source - https://github.com/lancopku/AdaMod/blob/master/adamod/adamod.py
+#modification - lessw2020 - use len_memory as integer lookback, convert to beta3 for easier usage
 
 class AdaMod(Optimizer):
     """Implements AdaMod algorithm with Decoupled Weight Decay (arxiv.org/abs/1711.05101)
@@ -19,7 +20,8 @@ class AdaMod(Optimizer):
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
     """
 
-    def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), beta3=0.999,
+    def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), 
+                 len_memory=1000, #will convert to beta3
                  eps=1e-8, weight_decay=0):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))
@@ -29,14 +31,17 @@ class AdaMod(Optimizer):
             raise ValueError("Invalid beta parameter at index 0: {}".format(betas[0]))
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError("Invalid beta parameter at index 1: {}".format(betas[1]))
+            
+        beta3 = 1 - (1/len_memory)
+        print(f"AdaMod optimizer: len_memory of {len_memory} set at Beta3 of {beta3}")
         if not 0.0 <= beta3 < 1.0:
             raise ValueError("Invalid beta3 parameter: {}".format(beta3))
         defaults = dict(lr=lr, betas=betas, beta3=beta3, eps=eps,
                         weight_decay=weight_decay)
-        super(AdaMod, self).__init__(params, defaults)
+        super().__init__(params, defaults)
 
     def __setstate__(self, state):
-        super(AdaMod, self).__setstate__(state)
+        super().__setstate__(state)
 
     def step(self, closure=None):
         """Performs a single optimization step.
