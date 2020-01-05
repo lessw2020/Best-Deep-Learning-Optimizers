@@ -5,6 +5,10 @@ https://github.com/shivram1987/diffGrad  for original source
 
 and paper:  https://arxiv.org/abs/1909.11015v2
 
+(TF version - if you are forced to use TF, here's a TF version of diffgrad:
+https://github.com/evanatyourservice/diffGrad-tf )
+
+
 This version adds in a version parameter:  version 0 is the main one used in the paper.  version 1 removes the abs value from the calculations and
 allows faster clamping.
 Use:  version=1 in your optimizer params.  version=0 is default.
