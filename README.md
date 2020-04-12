@@ -3,7 +3,7 @@ Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN
 </br></br>
 Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
 </br></br>
-# Updates - new version of Ranger with highest accuracy to date for all optimizers tested:
+## Updates - new version of Ranger with highest accuracy to date for all optimizers tested:
 April 11 - New version of Ranger released (20.4.11), highest score for accuracy to date.  
 </br>Ranger has been upgraded to use Gradient Centralization.  See: https://arxiv.org/abs/2004.01461  and github:  https://github.com/Yonghongwei/Gradient-Centralization
 
@@ -15,10 +15,10 @@ It will now use GC by default, and run it for both conv layers and fc layers. Yo
 
 Note - for optimal accuracy, make sure you use run with a flat lr for some time and then cosine descent the lr (72% - 28% descent), or if you don't have an lr framework... very comparable results by running at one rate for 75%, then stop and decrease lr, and run remaining 28%. 
 
-# Usage - GC on by default but you can control all aspects at init:
+## Usage - GC on by default but you can control all aspects at init:
 ![](images/ranger-with-gc-options.jpg)
 </br>
-# Ranger will print settings at first init so you can confirm optimization is set the way you want it:
+## Ranger will print settings at first init so you can confirm optimization is set the way you want it:
 ![](images/ranger-init.jpg)
 
 </br> Future work: MARTHE, HyperAdam and other optimizers will be tested and posted if they look good.  
