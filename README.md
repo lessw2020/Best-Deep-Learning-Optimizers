@@ -1,9 +1,28 @@
 # Best-Deep-Learning-Optimizers</br>
 Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN, NLP suitable
 </br></br>
-Current top performers = DeepMemory and Ranger.  this is only on initial testing.
+Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
 </br></br>
-![](images/1120-optimizer-testing.jpg)
+# Updates - new version of Ranger with highest accuracy to date:
+April 11 - New version of Ranger released (20.4.11), highest score for accuracy to date.  
+</br>Ranger has been upgraded to use Gradient Centralization.  See: https://arxiv.org/abs/2004.01461  and github:  https://github.com/Yonghongwei/Gradient-Centralization
+
+It will now use GC by default, and run it for both conv layers and fc layers. You can turn it on or off with "use_gc" at init to test out the difference on your datasets.
+![](images/projected_gradient.png)
+(image from gc github).   
+</br>The summary of gradient centralization: "GC can be viewed as a projected gradient descent method with a constrained loss function. The Lipschitzness of the constrained loss function and its gradient is better so that the training process becomes more efficient and stable."
+</br>
+
+Note - for optimal accuracy, make sure you use run with a flat lr for some time and then cosine descent the lr (72% - 28% descent), or if you don't have an lr framework... very comparable results by running at one rate for 75%, then stop and decrease lr, and run remaining 28%. 
+
+# Usage - GC on by default but you can control all aspects at init:
+![](images/ranger-with-gc-options.jpg)
+</br>
+# Ranger will print settings at first init so you can confirm optimization is set the way you want it:
+![](images/ranger-init.jpg)
+
+</br> Future work: MARTHE, HyperAdam and other optimizers will be tested and posted if they look good.  
+
 </br>
 12/27 - added DiffGrad, and unofficial version 1 support (coded from the paper). 
 </br>
