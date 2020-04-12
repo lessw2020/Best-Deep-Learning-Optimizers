@@ -3,7 +3,7 @@ Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN
 </br></br>
 Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
 </br></br>
-# Updates - new version of Ranger with highest accuracy to date:
+# Updates - new version of Ranger with highest accuracy to date for all optimizers tested:
 April 11 - New version of Ranger released (20.4.11), highest score for accuracy to date.  
 </br>Ranger has been upgraded to use Gradient Centralization.  See: https://arxiv.org/abs/2004.01461  and github:  https://github.com/Yonghongwei/Gradient-Centralization
 
