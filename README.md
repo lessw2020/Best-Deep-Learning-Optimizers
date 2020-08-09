@@ -3,7 +3,13 @@ Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN
 </br></br>
 Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
 </br></br>
-## Updates - new version of Ranger with highest accuracy to date for all optimizers tested:
+## Updates - AdaHessian, the first 'it really works and works really well' second order optimizer added:
+August 2020 - I tested AdaHessian last month on work datasets and it performed extremely well.  It's like training with a guided missile compared to most other optimizers.
+The big caveat is you will need about 2x the normal GPU memory to run it vs running with a 'first order' optimizer.
+I am trying to get a Titan GPU with 24GB GPU memory just for this purpose atm.
+
+
+new version of Ranger with highest accuracy to date for all optimizers tested:
 April 11 - New version of Ranger released (20.4.11), highest score for accuracy to date.  
 </br>Ranger has been upgraded to use Gradient Centralization.  See: https://arxiv.org/abs/2004.01461  and github:  https://github.com/Yonghongwei/Gradient-Centralization
 
