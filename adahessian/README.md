@@ -6,3 +6,12 @@ https://github.com/amirgholami/adahessian
 
 In the implementation here, I've consolidated it into a single file import instead of the util + optim file like in the official repo to make it easier to use.
 
+Note that you have to update your training loop as below:
+#
+# config for training loop:
+#
+            loss.backward(create_graph=True)
+            _, gradsH = get_params_grad(model)
+            optimizer.step(gradsH)
+
+
