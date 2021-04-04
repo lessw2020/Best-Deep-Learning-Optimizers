@@ -1,7 +1,7 @@
 # Best-Deep-Learning-Optimizers</br>
-Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN, NLP suitable
+Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN, Transformer, NLP suitable
 </br></br>
-Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
+Current top performers = Have not run benchmarks lately and a lot has changed.  Quick recommendations = transformer or CNN = madgrad / adahessian.  For CNN only, Ranger. 
 </br></br>
 ## Updates - 
 April 2021:  Meet Madgrad!  </br>Have added Madgrad with an improvement to weight decay. Madgrad is a new optimizer released by FB AI in February.  In testing with transformers for image classification, madgrad blew away the various Adam variants.
