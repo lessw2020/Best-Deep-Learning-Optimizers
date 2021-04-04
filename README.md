@@ -5,7 +5,7 @@ Current top performers = Have not run benchmarks lately and a lot has changed.  
 </br></br>
 ## Updates - 
 April 2021:  Meet Madgrad!  </br>Have added Madgrad with an improvement to weight decay. Madgrad is a new optimizer released by FB AI in February.  In testing with transformers for image classification, madgrad blew away the various Adam variants.
-However, as spotted by @nestoremeure, the weight decay impl was like adam instead of adamW.  In testing, AdamW style weight decay was the winner and thus the implementation here is with my modification to use AdamW style wd.
+However, as spotted by @nestordemeure, the weight decay impl was like adam instead of adamW.  In testing, AdamW style weight decay was the winner and thus the implementation here is with my modification to use AdamW style wd.
 Recommend testing with </br>a)no weight decay, recommended by Madgrad authors and </br>b)weight decay at same level you would use for AdamW with this madgrad_wd version.
 </br>
 Modified madgrad is here:  https://github.com/lessw2020/Best-Deep-Learning-Optimizers/tree/master/madgrad
