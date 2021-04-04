@@ -3,8 +3,19 @@ Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN
 </br></br>
 Current top performers = Ranger with Gradient Centralization is the leader (April 11/2020)  this is only on initial testing.
 </br></br>
-## Updates - AdaHessian, the first 'it really works and works really well' second order optimizer added:
-August 2020 - I tested AdaHessian last month on work datasets and it performed extremely well.  It's like training with a guided missile compared to most other optimizers.
+## Updates - 
+April 2021:  Meet Madgrad!  </br>Have added Madgrad with an improvement to weight decay. Madgrad is a new optimizer released by FB AI in February.  In testing with transformers for image classification, madgrad blew away the various Adam variants.
+However, as spotted by @nestoremeure, the weight decay impl was like adam instead of adamW.  In testing, AdamW style weight decay was the winner and thus the implementation here is with my modification to use AdamW style wd.
+Recommend testing with </br>a)no weight decay, recommended by Madgrad authors and </br>b)weight decay at same level you would use for AdamW with this madgrad_wd version.
+</br>
+Modified madgrad is here:  https://github.com/lessw2020/Best-Deep-Learning-Optimizers/tree/master/madgrad
+
+And original madgrad is here:  https://github.com/facebookresearch/madgrad
+
+Pending work = there is a new paper discussing Stable Weight Decay as being the ultimate weight decay.  Planning to implement and test with madgrad soon. 
+
+August 2020 -  AdaHessian, the first 'it really works and works really well' second order optimizer added:
+ I tested AdaHessian last month on work datasets and it performed extremely well.  It's like training with a guided missile compared to most other optimizers.
 The big caveat is you will need about 2x the normal GPU memory to run it vs running with a 'first order' optimizer.
 I am trying to get a Titan GPU with 24GB GPU memory just for this purpose atm.
 
