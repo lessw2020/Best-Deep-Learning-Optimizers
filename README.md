@@ -4,10 +4,14 @@ Collection of the latest, greatest, deep learning optimizers (for Pytorch) - CNN
 Current top performers = Have not run benchmarks lately and a lot has changed.  Quick recommendations = transformer or CNN = madgrad / adahessian.  For CNN only, Ranger. 
 </br></br>
 ## Updates - 
-April 2021:  Meet Madgrad!  </br>Have added Madgrad with an improvement to weight decay. Madgrad is a new optimizer released by FB AI in February.  In testing with transformers for image classification, madgrad blew away the various Adam variants.
-However, as spotted by @nestordemeure, the weight decay impl was like adam instead of adamW.  In testing, AdamW style weight decay was the winner and thus the implementation here is with my modification to use AdamW style wd.
-Recommend testing with </br>a)no weight decay, recommended by Madgrad authors and </br>b)weight decay at same level you would use for AdamW with this madgrad_wd version.
+April 2021:  Meet Madgrad!  </br>Have added Madgrad with an improvement to weight decay. Madgrad is a new optimizer released by FB AI in February.  In testing with transformers for image classification, madgrad blew away the various Adam variants.</br>
+However, as spotted by @nestordemeure, the weight decay impl was like adam instead of adamW.  
+In testing, AdamW style weight decay was the winner and thus the implementation here is with my modification to use AdamW style wd.
+
+Recommendations: test with </br>a)no weight decay, recommended by Madgrad authors and </br>b)weight decay at same level you would use for AdamW with this madgrad_wd version.
 </br>
+Important: madgrad is very different than Adam variants...thus recommend you start with madgrad default lr and do quick range of lr tests.  Do not just use what worked for you on your dataset with Adam(sh) lr.
+
 Modified madgrad is here:  https://github.com/lessw2020/Best-Deep-Learning-Optimizers/tree/master/madgrad
 
 And original madgrad is here:  https://github.com/facebookresearch/madgrad
